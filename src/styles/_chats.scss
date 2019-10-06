@@ -1,0 +1,61 @@
+@import 'colors';
+
+.chats {
+    margin: 0 5px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    height: calc(100vh - 85px);
+    width: 25%;
+    min-width: 250px;
+}
+
+.chats__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+.chats__toolbar-title {
+    font-size: .9rem;
+    color: gray;
+    user-select: none;
+}
+
+.chats__toolbar-controls {
+
+}
+
+.chats__body {
+
+}
+
+.chats__chat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: $primary;
+        color: #fff;
+        transition: all .1s ease;
+        cursor: pointer;
+    }
+
+    &.chosen {
+        background-color: $primary;
+        color: #fff;
+    }
+}
+
+.chats__chat-icon {
+    width: 24px;
+    margin-right: 10px;
+}

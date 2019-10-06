@@ -1,0 +1,20 @@
+@import 'colors';
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    margin: 5px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 0.2% 2%;
+    background-color: $primary;
+    color: #fff;
+}
+
+.app-header__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
