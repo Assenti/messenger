@@ -19,5 +19,17 @@
     &.primary {
         background-color: $primary;
         color: #fff;
+
+        &:hover {
+            background-color: darken($primary, 5%);
+        }
+    }
+
+    &.secondary {
+        background-color: $secondary;
+
+        &:hover {
+            background-color: darken($secondary, 5%);
+        }
     }
 }

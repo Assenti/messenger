@@ -4,6 +4,12 @@
 @import 'icon';
 @import 'chats';
 @import 'btn';
+@import 'active-chat';
+@import 'chat-messages';
+
+* {
+  box-sizing: border-box;
+}
 
 .app {
   font-family: 'Nunito Sans', sans-serif;
@@ -17,4 +23,12 @@
 
 .flex {
   display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.full-width {
+  width: 100%;
 }

@@ -22,7 +22,7 @@ export class Chats extends Component {
         </div>
         <div className="chats__body">
             {this.state.chats.map((chat, index) => {
-                return <div className="chats__chat" key={index}>
+                return <div className={`chats__chat ${chat.name === 'Chat one' ? 'chosen' : ''}`} key={index}>
                     <div className="flex">
                         <img className="chats__chat-icon" src={chat.icon} alt={chat.icon}/>
                         <div>{chat.name}</div>
