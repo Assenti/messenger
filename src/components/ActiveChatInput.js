@@ -10,16 +10,16 @@ export class ActiveChatInput extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.clearMessage = this.clearMessage.bind(this)
-        this.sendMessage = this.sendMessage.bind(this)
+        this.handleInput = this.handleInput.bind(this)
     }
 
     handleChange(e) {
         this.setState({message: e.target.value})
     }
 
-    sendMessage(e) {
-        console.log(this.state.message)
+    handleInput(e) {
         e.preventDefault()
+        this.props.onMessageInput(this.state.message)
         this.clearMessage()
     }
 
@@ -30,12 +30,12 @@ export class ActiveChatInput extends Component {
     render() {
         return (
         <form className="active-chat__input" 
-            onSubmit={this.sendMessage}>
+            onSubmit={this.handleInput}>
             <input value={this.state.message}
                 onChange={this.handleChange}/>
             <button className="btn secondary"
                 type="submit" 
-                onClick={this.sendMessage}>send</button>
+                onClick={this.handleInput}>send</button>
         </form>
         )
     }
