@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  // Link
+} from "react-router-dom"
 import './styles/all.scss'
 import { AppHeader } from './components/AppHeader'
 import { Chats } from './components/Chats'
 import { ActiveChat } from './components/ActiveChat'
+import { Auth } from './components/Auth'
 
 class App extends Component {
   
@@ -10,11 +17,20 @@ class App extends Component {
     return (
       <div className="app">
         <div className="app-container">
-          <AppHeader/>
-          <div className="flex space-between full-width">
-            <Chats/>
-            <ActiveChat/>
-          </div>
+          <Router>
+            <Switch>
+              <Route path="/auth">
+                <Auth/>
+              </Route>
+              <Route path="/">
+                <AppHeader/>
+                <div className="flex space-between full-width">
+                  <Chats/>
+                  <ActiveChat/>
+                </div>
+              </Route>
+            </Switch>
+          </Router>
         </div>
       </div>
     )
