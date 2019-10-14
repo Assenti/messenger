@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Alert } from './Alert'
 import axios from 'axios'
 
 export class Login extends Component {
@@ -16,7 +17,7 @@ export class Login extends Component {
     this.login = this.login.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.goToRegister = this.goToRegister.bind(this)
-
+    this.deleteAlert = this.deleteAlert.bind(this)
   }
 
   async login(e) {
@@ -32,11 +33,24 @@ export class Login extends Component {
                     password: this.state.password
                 })
                 console.log(res)
-                this.message = 'Logged in'
-                this.messageStatus = 'success'
+                this.setState({ 
+                    message: 'Logged in',
+                    messageStatus: 'success'
+                })
+
+                setTimeout(() => {
+                    this.deleteAlert()
+                }, 10000)
             } catch (e) {
                 console.log(e)
-                this.message = e.response.data
+                this.setState({ 
+                    message: e.response.data,
+                    messageStatus: 'error'
+                })
+
+                setTimeout(() => {
+                    this.deleteAlert()
+                }, 10000)
             }
         }
   }
@@ -57,12 +71,23 @@ export class Login extends Component {
     }
   }
 
+  deleteAlert() {
+    this.setState({ 
+        message: '',
+        messageStatus: ''
+    }) 
+  }
 
   goToRegister() {
     this.props.toggleForms('register')
   }
 
   render() {
+    let _message = this.state.message ? 
+        <Alert message={this.state.message}
+            deleteAlert={this.deleteAlert} 
+            messageStatus={this.state.messageStatus}/> : ''
+
     return (
       <div className="register">
           <div className="register-title">
@@ -102,7 +127,7 @@ export class Login extends Component {
             </div>
             <br/>
 
-            <div className={"alert " + this.messageStatus }>{ this.state.message }</div>
+            {_message}
 
             <div className="flex align-center justify-end">
                 <button className="btn primary" type="submit">Log in</button>
