@@ -1,0 +1,15 @@
+@import 'colors';
+
+.alert {
+    font-size: 1rem;
+    text-align: center;
+    padding: 5px;
+
+    &.success {
+        color: $success;
+    }
+
+    &.error {
+        color: $error;
+    }
+}

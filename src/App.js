@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
   // Link
 } from "react-router-dom"
 import './styles/all.scss'
@@ -28,6 +29,9 @@ class App extends Component {
                   <Chats/>
                   <ActiveChat/>
                 </div>
+              </Route>
+              <Route path="*">
+                <Redirect to="/"/>
               </Route>
             </Switch>
           </Router>

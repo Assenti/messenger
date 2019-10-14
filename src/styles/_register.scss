@@ -1,0 +1,26 @@
+@import 'colors';
+
+.register {
+    min-width: 300px;
+}
+
+.register-title {
+    font-size: 1.2rem;
+    color: grey;
+    padding: 5px;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-link {
+    font-size: .8rem;
+    color: cornflowerblue;
+
+    &:hover {
+        color: darken(cornflowerblue, 10%);
+        transition: all .3s ease;
+        cursor: pointer;
+    }
+}

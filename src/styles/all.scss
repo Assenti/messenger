@@ -6,6 +6,10 @@
 @import 'btn';
 @import 'active-chat';
 @import 'chat-messages';
+@import 'drawer';
+@import 'auth';
+@import 'register';
+@import 'form';
 
 * {
   box-sizing: border-box;
@@ -27,6 +31,18 @@
 
 .space-between {
   justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.align-center {
+  align-items: center;
 }
 
 .full-width {
