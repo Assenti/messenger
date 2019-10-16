@@ -2,7 +2,7 @@ import { SIGN_IN, SIGN_OUT } from '../actions/types'
 const userData = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
-    user: userData ? userData : {},
+    user: userData ? userData : null,
     isLogged: userData ? true : false
 }
 
