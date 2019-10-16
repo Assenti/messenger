@@ -8,7 +8,7 @@ import { api } from '../api'
  * @returns {Object} { message: string, messageStatus: string } 
  */
 export const signIn = (email, phone, password) => async (dispatch) => {
-    console.log(email, password)
+    
     try {
         const { data } = await api.post('/login', {
             email,

@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import Alert from './Alert'
-// import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { useHistory } from "react-router-dom"
+import { useDispatch } from 'react-redux'
 import { signIn } from '../actions/authActions'
+
+/** Components */
+import Alert from './Alert'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -11,20 +13,33 @@ const Login = () => {
     const [message, setMessage] = useState('')
     const [messageStatus, setMessageStatus] = useState('')
 
-    let alertMessage = message ? 
-        <Alert message={message}
-            deleteAlert={() => {
-                setMessage('')
-                setMessageStatus('')
-            }} 
-            messageStatus={messageStatus}/> : ''
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const deleteAlert = () => {
+        setMessage('')
+        setMessageStatus('')
+    }
+
+    const _signIn = async (e) => {
+        e.preventDefault()
+        if ((email || phone) && password) {
+            const res = await dispatch(signIn(email, phone, password))
+            if (res.messageStatus === 'error') {
+                setMessage(res.message)
+                setMessageStatus(res.messageStatus)
+            } else if (res.messageStatus === 'success') {
+                history.push('/')
+            }
+        } else {
+            setMessage('Input authentication credentials')
+            setMessageStatus('error')
+        }
+    }
 
     return (
       <div className="register">
-          <form className="form" onSubmit={e => {
-              e.preventDefault()
-              signIn(email, phone, password)
-          }}>
+          <form className="form" onSubmit={_signIn}>
 
             <div className={!!phone ? 'form-field disabled' : 'form-field'}>
                 <div className="form-field__icon">
@@ -58,7 +73,9 @@ const Login = () => {
             </div>
             <br/>
 
-            {alertMessage}
+            {message ? <Alert message={message}
+                    onDeleteAlert={deleteAlert} 
+                    messageStatus={messageStatus}/> : ''}
 
             <div className="flex align-center justify-end">
                 <button className="btn primary" type="submit">Log in</button>
@@ -70,15 +87,4 @@ const Login = () => {
 }
 
 export default Login
-  
-// const mapDispatchToProps = dispatch => { 
-//     return {
-//         signIn: () => dispatch(signIn()),
-//         dispatch
-//     }
-//  }
-  
-// export default connect(
-//     null,
-//     mapDispatchToProps
-// )(Login)
+

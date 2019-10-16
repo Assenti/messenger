@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Alert = ({ message, messageStatus, deleteAlert }) => {
+const Alert = ({ message, messageStatus, onDeleteAlert }) => {
     return (
       <div className={"alert " + messageStatus}
-        onClick={deleteAlert}>
+        onClick={onDeleteAlert}>
           {message}
       </div>
     )

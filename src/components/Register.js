@@ -38,7 +38,7 @@ const Register = () => {
 
     let alertMessage = message ? 
         <Alert message={message}
-            deleteAlert={() => {
+            onDeleteAlert={() => {
                 setMessage('')
                 setMessageStatus('')
             }} 

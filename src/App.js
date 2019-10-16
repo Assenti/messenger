@@ -5,9 +5,6 @@ import {
   Route,
   Redirect
 } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './store'
-import './styles/all.scss'
 
 /** Components */
 import AppHeader from './components/AppHeader'
@@ -16,9 +13,7 @@ import ActiveChat from './components/ActiveChat'
 import Auth from './components/Auth'
 
 const App = () => {
-  
     return (
-      <Provider store={store}>
         <div className="app">
           <div className="app-container">
             <Router>
@@ -40,7 +35,6 @@ const App = () => {
             </Router>
           </div>
         </div>
-      </Provider>
     )
 }
 
