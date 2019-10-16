@@ -30,6 +30,24 @@
             color: silver;
         }
     }
+
+    &.disabled {
+        input {
+            background-color: $secondary;
+            border-color: $secondary;
+            transition: all .2s ease;
+        }
+
+        .form-field__icon {
+            background-color: $secondary;
+            transition: all .2s ease;
+
+            i {
+                color: gray;
+            }
+        }
+        
+    }
 }
 
 .form-field__icon {

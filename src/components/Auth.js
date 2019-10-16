@@ -1,36 +1,31 @@
-import React, { Component } from 'react'
-import { Register } from './Register'
-import { Login } from './Login'
+import React, { useState } from 'react'
+import Register from './Register'
+import Login from './Login'
 
-export class Auth extends Component {
-  constructor() {
-    super()
+const Auth = () => {
+    const [currentForm, setCurrentForm] = useState('login')
+    const [currentFormTitle, setCurrentFormTitle] = useState('Log in')
+    const [toGoLink, setToGoLink] = useState("Don't have an account?")
 
-    this.state = {
-      currentForm: 'login'
+    const toggleForms = () => {
+        let form = currentForm === 'login' ? 'register' : 'login'
+        setCurrentForm(form)
+        setCurrentFormTitle(form === 'login' ? 'Log in' : 'Register')
+        setToGoLink(form === 'login' ? "Don't have an account?" : 'Have an account yet?')
     }
-
-    this.toggleForms = this.toggleForms.bind(this)
-  }
-
-  toggleForms(form) {
-    this.setState({ currentForm: form })
-  }
   
-  render() {
-    const current = this.state.currentForm === 'login' ? 
-                  <Login toggleForms={this.toggleForms}/> : 
-                  <Register toggleForms={this.toggleForms}/>
-
     return (
       <div className="auth">
           <div className="auth-block">
             <div className="auth-title">Messenger</div>
-            {current}
+            <div className="register-title">
+              {currentFormTitle}
+              <div className="register-link" onClick={toggleForms}>{toGoLink}</div>
+            </div>
+            {currentForm === 'login' ? <Login/> : <Register/>}
           </div>
       </div>
     )
-  }
 }
 
 export default Auth

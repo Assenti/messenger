@@ -1,88 +1,61 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
+import Alert from './Alert'
 
-export class Register extends Component {
-  constructor() {
-    super()
+const Register = () => {
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
+    const [messageStatus, setMessageStatus] = useState('')
 
-    this.state = {
-        firstname: '',
-        lastname: '',
-        email: '',
-        phone: '',
-        password: ''
-    }
-
-    this.register = this.register.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.goToLogin = this.goToLogin.bind(this)
-  }
-
-  async register(e) {
-    e.preventDefault()
-    if (!!this.state.firstname && 
-        !!this.state.lastname &&
-        !!this.state.email &&
-        !!this.state.phone &&
-        !!this.state.password
-        ) {
+    const register = async (e) => {
+        e.preventDefault()
+        if (!!firstname && 
+            !!lastname &&
+            !!email &&
+            !!phone &&
+            !!password
+            ) {
             try {
-                const res = await axios.post('http://localhost:3001/api/register', {
-                    firstname: this.state.firstname,
-                    lastname: this.state.lastname,
-                    email: this.state.email,
-                    phone: this.state.phone,
-                    password: this.state.password
-                })
-                console.log(res)
+                // const res = await axios.post('http://localhost:3001/api/register', {
+                //     firstname: this.state.firstname,
+                //     lastname: this.state.lastname,
+                //     email: this.state.email,
+                //     phone: this.state.phone,
+                //     password: this.state.password
+                // })
+                // console.log(res)
             } catch (e) {
                 console.log(e)
             }
+        } else {
+            setMessage('Input all required fields')
+            setMessageStatus('error')
         }
-  }
-
-  handleChange(e) {
-    switch (e.target.name) {
-        case 'firstname': 
-            this.setState({ firstname: e.target.value })
-            break
-        case 'lastname': 
-            this.setState({ lastname: e.target.value })
-            break
-        case 'email':
-            this.setState({ email: e.target.value })
-            break
-        case 'phone': 
-            this.setState({ phone: e.target.value })
-            break
-        case 'password':
-            this.setState({ password: e.target.value })
-            break
-        default: 
-            break
     }
-  }
 
-  goToLogin() {
-      this.props.toggleForms('login')
-  }
+    let alertMessage = message ? 
+        <Alert message={message}
+            deleteAlert={() => {
+                setMessage('')
+                setMessageStatus('')
+            }} 
+            messageStatus={messageStatus}/> : ''
 
-  render() {
     return (
       <div className="register">
-          <div className="register-title">
-              Register
-              <div className="register-link" onClick={this.goToLogin}>Have an account yet?</div>
-          </div>
-          <form className="form" onSubmit={this.register}>
+          <form className="form" onSubmit={register}>
 
             <div className="form-field">
                 <div className="form-field__icon">
                     <i className="material-icons">person</i>
                 </div>
                 <input placeholder="First name"
-                    name="firstname" 
-                    onChange={this.handleChange}/>
+                    value={firstname}
+                    required 
+                    onChange={e => setFirstname(e.target.value)}/>
             </div>
 
             <div className="form-field">
@@ -90,8 +63,9 @@ export class Register extends Component {
                     <i className="material-icons">person</i>
                 </div>
                 <input placeholder="Last name"
-                    name="lastname"
-                    onChange={this.handleChange}/>
+                    value={lastname}
+                    required
+                    onChange={e => setLastname(e.target.value)}/>
             </div>
 
             <div className="form-field">
@@ -99,8 +73,10 @@ export class Register extends Component {
                     <i className="material-icons">email</i>
                 </div>
                 <input placeholder="Email"
-                    name="email"
-                    onChange={this.handleChange}/>
+                    value={email}
+                    required
+                    type="email"
+                    onChange={e => setEmail(e.target.value)}/>
             </div>
 
             <div className="form-field">
@@ -108,8 +84,9 @@ export class Register extends Component {
                     <i className="material-icons">smartphone</i>
                 </div>
                 <input placeholder="Phone"
-                    name="phone"
-                    onChange={this.handleChange}/>
+                    value={phone}
+                    required
+                    onChange={e => setPhone(e.target.value)}/>
             </div>
 
             <div className="form-field">
@@ -118,10 +95,12 @@ export class Register extends Component {
                 </div>
                 <input placeholder="Password" 
                     type="password"
-                    name="password"
-                    onChange={this.handleChange}/>
+                    value={password}
+                    required
+                    onChange={e => setPassword(e.target.value)}/>
             </div>
             <br/>
+            {alertMessage}
             <div className="flex align-center justify-end">
                 <button className="btn primary" type="submit">Register</button>
             </div>
@@ -129,7 +108,6 @@ export class Register extends Component {
           </form>
       </div>
     )
-  }
 }
 
 export default Register

@@ -1,44 +1,24 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
-export class ActiveChatInput extends Component {
-    constructor(props) {
-        super(props)
+const ActiveChatInput = ({ onMessageInput }) => {
+    const [message, setMessage] = useState('')
 
-        this.state = {
-            message: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this)
-        this.clearMessage = this.clearMessage.bind(this)
-        this.handleInput = this.handleInput.bind(this)
-    }
-
-    handleChange(e) {
-        this.setState({message: e.target.value})
-    }
-
-    handleInput(e) {
+    const handleInput = (e) => {
         e.preventDefault()
-        this.props.onMessageInput(this.state.message)
-        this.clearMessage()
+        onMessageInput(message)
+        setMessage('')
     }
 
-    clearMessage() {
-        this.setState({ message: '' })
-    }
-
-    render() {
-        return (
+    return (
         <form className="active-chat__input" 
-            onSubmit={this.handleInput}>
-            <input value={this.state.message}
-                onChange={this.handleChange}/>
+            onSubmit={handleInput}>
+            <input value={message}
+                onChange={e => setMessage(e.target.value)}/>
             <button className="btn secondary"
                 type="submit" 
-                onClick={this.handleInput}>send</button>
+                onClick={handleInput}>send</button>
         </form>
-        )
-    }
+    )
 }
 
 export default ActiveChatInput

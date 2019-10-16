@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class Alert extends Component {
-    deleteAlert() {
-        this.props.deleteAlert()
-    }
-
-  render() {
+const Alert = ({ message, messageStatus, deleteAlert }) => {
     return (
-      <div className={"alert " + this.props.messageStatus}
-        onClick={this.deleteAlert.bind(this)}>
-          {this.props.message}
+      <div className={"alert " + messageStatus}
+        onClick={deleteAlert}>
+          {message}
       </div>
     )
-  }
 }
 
 export default Alert
