@@ -46,6 +46,8 @@ export const signIn = (email, phone, password) => async (dispatch) => {
 /** Sign out function */
 export const signOut = () => {
     return (dispatch) => {
+        localStorage.removeItem('user')
+
         dispatch({
             type: SIGN_OUT,
             payload: {}

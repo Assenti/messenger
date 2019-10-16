@@ -1,9 +1,21 @@
 import React from 'react'
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom"
+import { signOut } from '../actions/authActions'
 
 const Drawer = ({ onDrawerClose }) => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const userFirstname = useSelector(state => state.auth.user.firstname)
+    const userLastname = useSelector(state => state.auth.user.lastname)
+
     const logout = () => {
         closeDrawer(null, true)
+        dispatch(signOut())
+        setTimeout(() => {
+            history.push('/auth')
+        }, 100)
     }
 
     const closeDrawer = (e, isLink) => {
@@ -17,10 +29,10 @@ const Drawer = ({ onDrawerClose }) => {
         }
     }
 
-    const username = 'Asset Sultanov'
+    const username = `${userFirstname} ${userLastname}`
     const links = [
-        { title: 'Main', icon: 'home', path: '/', func: closeDrawer(null, true) },
-        { title: 'Account', icon: 'account_circle', path: '/account', func: closeDrawer(null, true) },
+        { title: 'Main', icon: 'home', path: '/', func: closeDrawer },
+        { title: 'Account', icon: 'account_circle', path: '/account', func: closeDrawer },
         { title: 'Logout', icon: 'exit_to_app', path: '/auth', func: logout }
     ]
 
@@ -32,10 +44,11 @@ const Drawer = ({ onDrawerClose }) => {
                 {username}
             </div>
             <div className="drawer__list">
-                {links.map(link => {
+                {links.map((link, index) => {
                     return <Link className="drawer__list-item"
-                            onClick={link.func} 
-                            to={link.path}>
+                        key={index}
+                        to={link.path} 
+                        onClick={link.func}>
                         <i className="material-icons">{link.icon}</i>
                         {link.title}
                     </Link>
