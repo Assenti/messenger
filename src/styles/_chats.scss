@@ -27,7 +27,7 @@
 }
 
 .chats__body {
-
+    width: 100%;
 }
 
 .chats__chat {
@@ -57,4 +57,30 @@
 .chats__chat-icon {
     width: 24px;
     margin-right: 10px;
+}
+
+.chats__new-chat-field {
+    width: 100%;
+    height: 40px;
+    display: none;
+    justify-content: center;
+    margin: 5px 0;
+
+    & > input {
+        outline: none;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        padding: 10px 15px;
+        width: 95%;
+        height: 100%;
+        font-size: 1rem;
+
+        &:focus {
+            border-color: cornflowerblue;
+        }
+
+        &::placeholder {
+            color: silver;
+        }
+    }
 }

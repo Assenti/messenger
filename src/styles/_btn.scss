@@ -11,12 +11,22 @@
     font-size: .8rem;
     font-weight: bold;
     user-select: none;
+    transition: all .3s ease;
 
-    &:active {
+    &:active:not(.disabled-btn) {
         transform: scale(.95);
     }
 
-    &.primary {
+    &.disabled-btn {
+        cursor: not-allowed;
+        background-color: lightgray;
+
+        &:hover {
+            background-color: darken(lightgray, 10%);
+        }
+    }
+
+    &.primary:not(.disabled-btn) {
         background-color: $primary;
         color: #fff;
 

@@ -27,52 +27,55 @@
 }
 
 .active-chat__body {
-    height: calc(100% - 90px);
-    // background-color: rgba($color: #f7f7f7, $alpha: .5);
+    height: calc(100% - 95px);
     overflow-y: auto;
     
-    /* width */
     &::-webkit-scrollbar {
         width: 5px;
     }
     
-    /* Track */
     &::-webkit-scrollbar-track {
         background: #f1f1f1; 
     }
     
-    /* Handle */
     &::-webkit-scrollbar-thumb {
         background: $secondary; 
     }
     
-    /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
         background: darken($secondary, 10%); 
     }
 }
 
 .active-chat__input {
-    height: 45px;
+    height: 50px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 1%;
-    background-color: rgba($color: #f7f7f7, $alpha: .5)
-}
+    background-color: $secondary;
 
-.active-chat__input input {
-    outline: none;
-    width: calc(100% - 100px);
-    margin-right: 10px;
-    height: 35px;
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    padding: 0 10px;
-    font-size: 1rem;
+    & > input {
+        outline: none;
+        width: calc(100% - 100px);
+        margin-right: 10px;
+        height: 40px;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        padding: 0 10px;
+        font-size: 1rem;
 
-    &:focus {
-        border-color: $info;
+        &::placeholder {
+            color: silver;
+        }
+    
+        &:focus {
+            border-color: $info;
+        }
+    }
+
+    & > button {
+        height: 40px;
     }
 }

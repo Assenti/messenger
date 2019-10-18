@@ -30,10 +30,15 @@ const Drawer = ({ onDrawerClose }) => {
         }
     }
 
+    const inviteFriend = () => {
+        onDrawerClose()
+    }
+
     const username = `${userFirstname} ${userLastname}`
     const links = [
         { title: 'Main', icon: 'home', path: '/', func: closeDrawer },
         { title: 'Account', icon: 'account_circle', path: '/account', func: closeDrawer },
+        { title: 'Invite friend', icon: 'person_add', path: '/', func: inviteFriend },
         { title: 'Logout', icon: 'exit_to_app', path: '/auth', func: logout }
     ]
 
@@ -41,7 +46,7 @@ const Drawer = ({ onDrawerClose }) => {
       <div className="drawer__container" onClick={closeDrawer}>
           <div className="drawer">
             <div className="drawer__title">
-                <img src={avatar} alt="avatar"/>
+                <img src={avatar} alt="avatar" title="Author: Flaticon https://www.flaticon.com/authors/monkik"/>
                 <div>{username}</div>
             </div>
             <div className="drawer__list">
