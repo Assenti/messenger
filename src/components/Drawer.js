@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import { signOut } from '../actions/authActions'
+import avatar from '../img/person.png'
 
 const Drawer = ({ onDrawerClose }) => {
     const dispatch = useDispatch()
@@ -40,8 +41,8 @@ const Drawer = ({ onDrawerClose }) => {
       <div className="drawer__container" onClick={closeDrawer}>
           <div className="drawer">
             <div className="drawer__title">
-                <i className="material-icons">account_circle</i>
-                {username}
+                <img src={avatar} alt="avatar"/>
+                <div>{username}</div>
             </div>
             <div className="drawer__list">
                 {links.map((link, index) => {

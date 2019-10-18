@@ -1,0 +1,24 @@
+.preloader-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preloader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    background-image: url('../img/builder-drilling.gif');
+    background-size: 165%;
+    background-position: center;
+    border-radius: 50%;
+    box-shadow: 1px 1px 40px rgba(0, 0, 0, .2);
+}

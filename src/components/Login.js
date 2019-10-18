@@ -5,6 +5,7 @@ import { signIn } from '../actions/authActions'
 
 /** Components */
 import Alert from './Alert'
+import Preloader from './Preloader'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
     const [messageStatus, setMessageStatus] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -24,7 +26,10 @@ const Login = () => {
     const _signIn = async (e) => {
         e.preventDefault()
         if ((email || phone) && password) {
+            setLoading(true)
             const res = await dispatch(signIn(email, phone, password))
+            setLoading(false)
+
             if (res.messageStatus === 'error') {
                 setMessage(res.message)
                 setMessageStatus(res.messageStatus)
@@ -38,8 +43,10 @@ const Login = () => {
     }
 
     return (
-      <div className="register">
-          <form className="form" onSubmit={_signIn}>
+        <div className="register">
+            <form className="form" onSubmit={_signIn}>
+              
+            {loading ? <Preloader/> : ''}
 
             <div className={!!phone ? 'form-field disabled' : 'form-field'}>
                 <div className="form-field__icon">
@@ -71,11 +78,10 @@ const Login = () => {
                     value={password}
                     onChange={e => setPassword(e.target.value)}/>
             </div>
-            <br/>
-
+            
             {message ? <Alert message={message}
                     onDeleteAlert={deleteAlert} 
-                    messageStatus={messageStatus}/> : ''}
+                    messageStatus={messageStatus}/> : <br/>}
 
             <div className="flex align-center justify-end">
                 <button className="btn primary" type="submit">Log in</button>

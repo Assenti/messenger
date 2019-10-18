@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Alert from './Alert'
+import Preloader from './Preloader'
+import { api } from '../api'
 
-const Register = () => {
+const Register = ({ onRegister }) => {
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
     const [email, setEmail] = useState('')
@@ -9,6 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
     const [messageStatus, setMessageStatus] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const register = async (e) => {
         e.preventDefault()
@@ -19,16 +22,34 @@ const Register = () => {
             !!password
             ) {
             try {
-                // const res = await axios.post('http://localhost:3001/api/register', {
-                //     firstname: this.state.firstname,
-                //     lastname: this.state.lastname,
-                //     email: this.state.email,
-                //     phone: this.state.phone,
-                //     password: this.state.password
-                // })
-                // console.log(res)
+                setLoading(true)
+                const { data } = await api.post('/register', {
+                    firstname,
+                    lastname,
+                    email,
+                    phone,
+                    password
+                })
+                
+                if (data.status === 'success') {
+                    setMessage('Congrats! You have been registered!')
+                    setMessageStatus('success')
+
+                    setTimeout(() => {
+                        onRegister()
+                        setMessage('')
+                        setMessageStatus('')
+                    }, 1000)
+                } else {
+                    setMessage(data.message)
+                    setMessageStatus(data.status)
+                }
             } catch (e) {
                 console.log(e)
+                setMessage('Server error')
+                setMessageStatus('error')
+            } finally {
+                setLoading(false)
             }
         } else {
             setMessage('Input all required fields')
@@ -46,6 +67,8 @@ const Register = () => {
 
     return (
       <div className="register">
+          {loading ? <Preloader/> : ''}
+
           <form className="form" onSubmit={register}>
 
             <div className="form-field">
@@ -99,10 +122,12 @@ const Register = () => {
                     required
                     onChange={e => setPassword(e.target.value)}/>
             </div>
-            <br/>
+            {alertMessage ? '' : <br/>}
             {alertMessage}
             <div className="flex align-center justify-end">
-                <button className="btn primary" type="submit">Register</button>
+                <button className="btn primary"
+                    disabled={loading} 
+                    type="submit">Register</button>
             </div>
 
           </form>

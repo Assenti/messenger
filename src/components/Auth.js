@@ -13,6 +13,12 @@ const Auth = () => {
         setCurrentFormTitle(form === 'login' ? 'Log in' : 'Register')
         setToGoLink(form === 'login' ? "Don't have an account?" : 'Have an account yet?')
     }
+
+    const goToLogin = () => {
+      setCurrentForm('login')
+      setCurrentFormTitle('Log in')
+      setToGoLink("Don't have an account?")
+    }
   
     return (
       <div className="auth">
@@ -22,7 +28,7 @@ const Auth = () => {
               {currentFormTitle}
               <div className="register-link" onClick={toggleForms}>{toGoLink}</div>
             </div>
-            {currentForm === 'login' ? <Login/> : <Register/>}
+            {currentForm === 'login' ? <Login/> : <Register onRegister={goToLogin}/>}
           </div>
       </div>
     )

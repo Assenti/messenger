@@ -11,10 +11,16 @@
 @import 'register';
 @import 'form';
 @import 'alert';
+@import 'preloader';
 
 * {
   font-family: 'Nunito Sans', sans-serif;
   box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
 
 .app-container {
