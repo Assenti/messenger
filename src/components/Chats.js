@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { api, setToken } from '../api'
-import mockIcon from '../img/logo192.png'
 import { useSelector } from 'react-redux'
+import ChatItem from './ChatItem'
 
 const Chats = () => {
     const [search, setSearch] = useState('')
     const [searchedUsers, setSearchedUsers] = useState([])
     const searchInput = React.createRef()
     const token = useSelector(state => state.auth.user.token)
+    const chats = useSelector(state => state.chat.chats)
 
     /** Something like computed property in Vue */
     // const filteredChats = (chats) => {
@@ -24,6 +25,7 @@ const Chats = () => {
         let field = document.querySelector('#search-field')
         field.style.display = field.style.display !== 'flex' ? 'flex' : 'none'
         if (field.style.display === 'flex') searchInput.current.focus()
+        if (field.style.display !== 'flex') setSearchedUsers([])
     }
     
     const handleKeyDown = (e) => {
@@ -46,21 +48,23 @@ const Chats = () => {
     }
 
     async function searchUser() {
-        try {
-            setToken(token)
-            const { data } = await api.get(`/searchContacts?query=${search}`)
-            if (data.status === 'success') {
-                setSearchedUsers(data.result)
+        if (search) {
+            try {
+                setToken(token)
+                const { data } = await api.get(`/searchContacts?query=${search}`)
+                if (data.status === 'success') {
+                    setSearchedUsers(data.result)
+                }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
         }
     }
 
     return (
       <div className="chats">
         <div className="chats__toolbar">
-            <div className="chats__toolbar-title">Your contacts</div>
+            <div></div>
             <button className="btn primary"
                 onClick={toggleSearchField}>new chat</button>
         </div>
@@ -73,14 +77,8 @@ const Chats = () => {
                     onKeyDown={handleKeyDown}
                     onChange={searchContact}/>
             </div>
-            {searchedUsers.map((user, index) => {
-                return <div className="chats__chat" key={index}>
-                    <div className="flex">
-                        <img className="chats__chat-icon" src={mockIcon} alt="avatar"/>
-                        <div>{user.firstname} {user.lastname}</div>
-                    </div>
-                </div>
-            })}
+            {searchedUsers.length === 0 ? <ChatItem listTitle="Active chats" items={chats} /> : ''}
+            <ChatItem listTitle={searchedUsers.length > 0 ? 'Possible users' : ''} items={searchedUsers} />
         </div>
       </div>
     )

@@ -22,6 +22,13 @@
     user-select: none;
 }
 
+.chats__toolbar-subtitle {
+    font-size: .9rem;
+    color: gray;
+    user-select: none;
+    padding: 2px 10px;
+}
+
 .chats__toolbar-controls {
 
 }
@@ -36,22 +43,41 @@
     justify-content: space-between;
     border-bottom: 1px solid lightgray;
     padding: 10px;
+    width: 100%;
 
     &:last-child {
         border-bottom: none;
     }
 
     &:hover {
-        background-color: rgba($primary, .3);
-        color: #fff;
+        background-color: rgba($secondary, .3);
         transition: all .1s ease;
         cursor: pointer;
+
+        .chats__chat-arrow {
+            display: flex;
+        }
     }
 
     &.chosen {
         background-color: $primary;
         color: #fff;
     }
+}
+
+.chats__chat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.chats__chat-arrow {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: all .3s ease;
 }
 
 .chats__chat-icon {

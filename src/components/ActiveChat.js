@@ -1,9 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { NEW_MSG } from '../actions/types'
 import ActiveChatInput from './ActiveChatInput'
+import { socket } from '../socket'
 
 const ActiveChat = () => {
     const messages = useSelector(state => state.chat.chatMessages)
+    const dispatch = useDispatch()
+
+    socket.on('addedNewMessage', (msgData) => {
+        dispatch({
+            type: NEW_MSG,
+            payload: msgData
+        })
+    })
 
     return (
         <div className="active-chat">

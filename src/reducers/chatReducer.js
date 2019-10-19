@@ -1,7 +1,17 @@
-import { NEW_MSG } from '../actions/types'
+import { NEW_MSG, NEW_CHAT } from '../actions/types'
 import mockAvatar from '../img/man.png'
 
 const initialState = {
+    chats: [{
+        _id: "5da9e41fcb171d2e185dc000",
+        createdAt:"2019-10-18T16:11:11.662Z",
+        email:"asseke@list.ru",
+        phone:"7077110119",
+        firstname:"Sarah",
+        lastname:"Connor",
+        avatar:"",
+        status:"Hey there! I am using Messenger"
+    }],
     chatMessages: [
         { id: 1, createdAt: '2019-10-06 20:01:00', text: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -15,6 +25,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case NEW_CHAT: 
+            let newChatsString = JSON.stringify(state.chats)
+            let newChats = JSON.parse(newChatsString)
+            newChats.unshift(action.payload)
+            return {
+                ...state,
+                chatMessages: newChats
+            }
         case NEW_MSG: 
             let newMsgsString = JSON.stringify(state.chatMessages)
             let newMsgs = JSON.parse(newMsgsString)

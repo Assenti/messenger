@@ -1,7 +1,10 @@
 import axios from 'axios'
+const _backendUri = 'http://localhost:3001'
+
+export const backendUri = _backendUri
 
 export const api = axios.create({
-    baseURL: 'http://localhost:3001/api'
+    baseURL: `${_backendUri}/api`
 })
 
 export const setToken = (token) => {
