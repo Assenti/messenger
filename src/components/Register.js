@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Alert from './Alert'
 import Preloader from './Preloader'
+import InputMask from 'react-input-mask'
 import { api } from '../api'
 
 const Register = ({ onRegister }) => {
@@ -23,11 +24,12 @@ const Register = ({ onRegister }) => {
             ) {
             try {
                 setLoading(true)
+                let _phone = phone.replace(/['' ',(,)]/g, '').substr(2, 12)
                 const { data } = await api.post('/register', {
                     firstname,
                     lastname,
                     email,
-                    phone,
+                    _phone,
                     password
                 })
                 
@@ -106,9 +108,12 @@ const Register = ({ onRegister }) => {
                 <div className="form-field__icon">
                     <i className="material-icons">smartphone</i>
                 </div>
-                <input placeholder="Phone"
+                <InputMask type="tel"
                     value={phone}
                     required
+                    mask="+7\ (999) 999 99 99"
+                    placeholder="Phone"
+                    disabled={!!email}
                     onChange={e => setPhone(e.target.value)}/>
             </div>
 

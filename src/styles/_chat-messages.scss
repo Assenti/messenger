@@ -3,9 +3,28 @@
 .chat-messages {
     display: flex;
     flex-direction: column-reverse;
+    min-height: calc(100% - 95px);  
+    height: calc(100% - 95px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: $secondary; 
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background: darken($secondary, 10%); 
+    }
 }
 
-.chat-messge__container {
+.chat-message__container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -19,54 +38,76 @@
     min-height: 35px;
     font-size: .9rem;
     border-radius: 4px;
-    border: 1px solid lightgray;
-    margin: 2px;
-    display: flex;
-    padding: 2px;
+    border: 1px solid;
+    margin: 4px 2px;
+    padding: 5px;
+    position: relative;
+    transition: all .5s ease;
 
     &.sender {
-        background-color: rgba($info, .2);
+        border-color: $info;
+        background-color: rgba($info, .15);
+        margin-right: 60px;
     }
 
     &.receiver {
+        border-color: lightgray;
         background-color: rgba($secondary, .2);
+        margin-left: 60px;
     }
+}
+
+.chat-message__date {
+    text-align: center;
+    font-size: .6rem;
+    font-style: italic;
+    color: gray;
+    padding: 3px;
+    min-width: 110px;
 }
 
 
 .chat-message__icon {
-    width: 90px;
-    text-align: center;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
 
-    div {
-        font-size: .75rem;
-        
-        &:hover {
-            color: $info;
+    img {
+        width: 100%;
+    }
+
+    &.receiver {
+        left: -55px;
+    }
+
+    &.sender {
+        right: -55px;
+    }
+}
+
+.chat-message__text {
+    height: 100%; 
+
+    & > div:first-child {
+        strong {
+            font-size: .8rem;
+            font-weight: bold;
+            color: $dark;
+        }
+
+        strong:hover {
+            color: cornflowerblue;
             transition: all .3s ease;
             cursor: pointer;
         }
     }
 
-    img {
-        width: 24px;
-        margin-right: 10px;
-    }
-}
-
-.chat-message__text {
-    height: 100%;
-    padding: 0 5px;
-
-    div:first-child {
-        height: calc(100% - 15px);
-    }
-    
-    div:last-child {
-        text-align: right;
-        font-size: .6rem;
-        font-style: italic;
-        color: gray;
-        height: 15px;
+    & > div:last-child {
+        font-weight: normal;
+        font-size: .9rem;
+        color: black;
     }
 }

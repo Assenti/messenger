@@ -5,11 +5,12 @@ import { useHistory } from "react-router-dom"
 import { signOut } from '../actions/authActions'
 import avatar from '../img/person.png'
 
-const Drawer = ({ onDrawerClose }) => {
+const Drawer = ({ onDrawerClose, onInviteFriend }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const userFirstname = useSelector(state => state.auth.user.firstname)
     const userLastname = useSelector(state => state.auth.user.lastname)
+    
 
     const logout = () => {
         closeDrawer(null, true)
@@ -31,7 +32,7 @@ const Drawer = ({ onDrawerClose }) => {
     }
 
     const inviteFriend = () => {
-        onDrawerClose()
+        onInviteFriend()
     }
 
     const username = `${userFirstname} ${userLastname}`
@@ -44,23 +45,27 @@ const Drawer = ({ onDrawerClose }) => {
 
     return (
       <div className="drawer__container" onClick={closeDrawer}>
-          <div className="drawer">
-            <div className="drawer__title">
-                <img src={avatar} alt="avatar" title="Author: Flaticon https://www.flaticon.com/authors/monkik"/>
-                <div>{username}</div>
+            <div className="drawer animated slideInRight faster">
+                <div className="drawer__title">
+                    <div>
+                        <img src={avatar} 
+                            alt="avatar" 
+                            title="Author: Flaticon https://www.flaticon.com/authors/monkik"/>
+                    </div>
+                    <span>{username}</span>
+                </div>
+                <div className="drawer__list">
+                    {links.map((link, index) => {
+                        return <Link className="drawer__list-item"
+                            key={index}
+                            to={link.path} 
+                            onClick={link.func}>
+                            <i className="material-icons">{link.icon}</i>
+                            {link.title}
+                        </Link>
+                    })}
+                </div>
             </div>
-            <div className="drawer__list">
-                {links.map((link, index) => {
-                    return <Link className="drawer__list-item"
-                        key={index}
-                        to={link.path} 
-                        onClick={link.func}>
-                        <i className="material-icons">{link.icon}</i>
-                        {link.title}
-                    </Link>
-                })}
-            </div>
-        </div>
       </div>
     )
 }

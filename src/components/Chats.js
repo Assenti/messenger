@@ -60,7 +60,7 @@ const Chats = () => {
     return (
       <div className="chats">
         <div className="chats__toolbar">
-            <div className="chats__toolbar-title">Your chats</div>
+            <div className="chats__toolbar-title">Your contacts</div>
             <button className="btn primary"
                 onClick={toggleSearchField}>new chat</button>
         </div>

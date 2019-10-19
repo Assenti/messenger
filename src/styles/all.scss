@@ -12,13 +12,14 @@
 @import 'form';
 @import 'alert';
 @import 'preloader';
+@import 'modal';
 
 * {
   font-family: 'Nunito Sans', sans-serif;
   box-sizing: border-box;
 }
 
-html {
+html, body {
   margin: 0;
   padding: 0;
 }

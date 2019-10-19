@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
+import InviteFriend from './InviteFriend'
 import Drawer from './Drawer'
 
 const AppHeader = () => {
     const [menu, setMenu] = useState(false)
+    const [invitieFriendModal, setInviteFriendModal] = useState(false)
 
     const toggleMenu = () => {
         menu ? setMenu(false) : setMenu(true)
+    }
+
+    const inviteFriend = () => {
+        setMenu(false)
+        setInviteFriendModal(true)
     }
 
     return (
@@ -16,7 +23,8 @@ const AppHeader = () => {
                     <i className="material-icons">menu</i>
                 </div>
             </div>
-            {menu ? <Drawer onDrawerClose={toggleMenu}/> : ''}
+            {menu ? <Drawer onDrawerClose={toggleMenu} onInviteFriend={inviteFriend}/> : ''}
+            {invitieFriendModal ? <InviteFriend onCloseModal={() => setInviteFriendModal(false)}/> : ''}
         </div>
     )
 }

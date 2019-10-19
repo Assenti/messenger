@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import { addNewMsg } from '../actions/chatActions'
+import { useDispatch } from 'react-redux'
 
-const ActiveChatInput = ({ onMessageInput }) => {
+const ActiveChatInput = () => {
     const [message, setMessage] = useState('')
+    const dispatch = useDispatch()
 
     const handleInput = (e) => {
         e.preventDefault()
-        onMessageInput(message)
+        dispatch(addNewMsg(message))
         setMessage('')
     }
 
@@ -17,7 +20,7 @@ const ActiveChatInput = ({ onMessageInput }) => {
                 onChange={e => setMessage(e.target.value)}/>
             <button className={!message ? 'btn primary disabled-btn' : 'btn primary'}
                 type="submit"
-                disabled={!!message} 
+                disabled={!message} 
                 onClick={handleInput}>send</button>
         </form>
     )

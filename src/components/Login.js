@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { signIn } from '../actions/authActions'
-
-/** Components */
+import InputMask from 'react-input-mask'
 import Alert from './Alert'
 import Preloader from './Preloader'
 
@@ -27,8 +26,8 @@ const Login = () => {
         e.preventDefault()
         if ((email || phone) && password) {
             setLoading(true)
-            const res = await dispatch(signIn(email, phone, password))
-            setLoading(false)
+            let _phone = phone.replace(/['' ',(,)]/g, '').substr(2, 12)
+            const res = await dispatch(signIn(email, _phone, password))
 
             if (res.messageStatus === 'error') {
                 setMessage(res.message)
@@ -47,25 +46,29 @@ const Login = () => {
             <form className="form" onSubmit={_signIn}>
               
             {loading ? <Preloader/> : ''}
-
+            
             <div className={!!phone ? 'form-field disabled' : 'form-field'}>
                 <div className="form-field__icon">
                     <i className="material-icons">email</i>
                 </div>
-                <input placeholder="Email"
+                <input type="email" 
+                    required
+                    placeholder="Email"
                     disabled={!!phone}
                     value={email}
-                    type="email"
                     onChange={e => setEmail(e.target.value)}/>
             </div>
-            
+
             <div className={!!email ? 'form-field disabled' : 'form-field'}>
                 <div className="form-field__icon">
                     <i className="material-icons">smartphone</i>
                 </div>
-                <input placeholder="Phone"
-                    disabled={!!email}
+                <InputMask type="tel"
                     value={phone}
+                    required
+                    mask="+7\ (999) 999 99 99"
+                    placeholder="Phone"
+                    disabled={!!email}
                     onChange={e => setPhone(e.target.value)}/>
             </div>
 
@@ -75,6 +78,7 @@ const Login = () => {
                 </div>
                 <input placeholder="Password" 
                     type="password"
+                    required
                     value={password}
                     onChange={e => setPassword(e.target.value)}/>
             </div>

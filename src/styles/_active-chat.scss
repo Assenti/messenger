@@ -26,27 +26,6 @@
     font-weight: bold;
 }
 
-.active-chat__body {
-    height: calc(100% - 95px);
-    overflow-y: auto;
-    
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-    
-    &::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-    }
-    
-    &::-webkit-scrollbar-thumb {
-        background: $secondary; 
-    }
-    
-    &::-webkit-scrollbar-thumb:hover {
-        background: darken($secondary, 10%); 
-    }
-}
-
 .active-chat__input {
     height: 50px;
     width: 100%;
