@@ -46,7 +46,7 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
                         <div className="chats__chat-item">
                             <div className="flex">
                                 <img className="chats__chat-icon" src={mockIcon} alt="avatar"/>
-                                <div>{user.firstname} {user.lastname}</div>
+                                <div className="flex align-center">{user.firstname} {user.lastname}</div>
                             </div>
                             <div className="chats__chat-arrow">
                                 <i className="material-icons">chevron_right</i>

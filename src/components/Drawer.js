@@ -10,6 +10,7 @@ const Drawer = ({ onDrawerClose, onInviteFriend }) => {
     const history = useHistory()
     const userFirstname = useSelector(state => state.auth.user.firstname)
     const userLastname = useSelector(state => state.auth.user.lastname)
+    const link = 'https://github.com/Assenti'
     
 
     const logout = () => {
@@ -64,6 +65,15 @@ const Drawer = ({ onDrawerClose, onInviteFriend }) => {
                             {link.title}
                         </Link>
                     })}
+                </div>
+                <div className="drawer__author-info" title="Visit my Github Page">
+                    <a href={link}
+                        onClick={e => {
+                            e.preventDefault()
+                            window.open(link, '_blank')
+                        }}>
+                        <small>by</small> @AssetSultanov
+                    </a>
                 </div>
             </div>
       </div>
