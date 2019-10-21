@@ -9,8 +9,7 @@ import { useSelector } from 'react-redux'
 
 /** Components */
 import AppHeader from './components/AppHeader'
-import Chats from './components/Chats'
-import ActiveChat from './components/ActiveChat'
+import Main from './components/Main'
 import Auth from './components/Auth'
 
 const App = () => {
@@ -26,10 +25,7 @@ const App = () => {
                         </Route>
                         <PrivateRoute path="/">
                             <AppHeader/>
-                            <div className="flex space-between full-width">
-                                <Chats/>
-                                <ActiveChat/>
-                            </div>
+                            <Main/>
                         </PrivateRoute>
                         <Route path="*">
                             <Redirect to="/"/>

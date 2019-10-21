@@ -8,10 +8,12 @@
     height: calc(100vh - 80px);
     width: 75%;
     min-width: 250px;
+    background-color: rgba(#ece5dd, .3);
 }
 
 .active-chat__toolbar {
     background-color: $primary;
+    background: linear-gradient(90deg, rgba(#01579B,1) 0%, rgba($primary,1) 50%, rgba(3,155,229,1) 100%);
     color: #fff;
     height: 45px;
     width: 100%;

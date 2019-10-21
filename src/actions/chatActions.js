@@ -1,4 +1,4 @@
-// import { NEW_MSG } from '../actions/types'
+import { NEW_MSG } from '../actions/types'
 import mockAvatar from '../img/man.png'
 import { api, setToken } from '../api'
 import { socket } from '../socket'
@@ -19,6 +19,22 @@ export const addNewMsg = (msg, chatId, senderId, receiverId) => async (dispatch)
         createdAt: '2019-10-06 20:05:00', 
         avatar: mockAvatar
     })
+
+    socket.on('addedNewMessage', (msgData) => {
+        console.log(msgData)
+
+        dispatch({
+            type: NEW_MSG,
+            payload: msgData
+        })
+    })
+
+    // socket.on('addedNewMessageBroadcast', (msgData) => {
+    //     dispatch({
+    //         type: NEW_MSG,
+    //         payload: msgData
+    //     })
+    // })
 }
 
 /** Add a new chat

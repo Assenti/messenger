@@ -3,22 +3,12 @@ import { api, setToken } from '../api'
 import { useSelector } from 'react-redux'
 import ChatItem from './ChatItem'
 
-const Chats = () => {
+const Chats = ({ activeChat, onChooseChat }) => {
     const [search, setSearch] = useState('')
     const [searchedUsers, setSearchedUsers] = useState([])
     const searchInput = React.createRef()
     const token = useSelector(state => state.auth.user.token)
     const chats = useSelector(state => state.chat.chats)
-
-    /** Something like computed property in Vue */
-    // const filteredChats = (chats) => {
-    //     return chats.filter(chat => {
-    //         return chat.firstname.toLowerCase().includes(search.toLowerCase()) ||
-    //             chat.lastname.toLowerCase().includes(search.toLowerCase()) ||
-    //             chat.email.toLowerCase().includes(search.toLowerCase()) ||
-    //             chat.phone.toLowerCase().includes(search.toLowerCase())
-    //     })
-    // }
 
     const toggleSearchField = (e) => {
         if (e) e.preventDefault()
@@ -33,6 +23,7 @@ const Chats = () => {
             if (search) {
                 setSearch('')
             } else if (!search) {
+                searchInput.current.blur()
                 toggleSearchField()
             }
         }
@@ -47,7 +38,7 @@ const Chats = () => {
         setTimeout(() => searchUser(), 700)
     }
 
-    async function searchUser() {
+    const searchUser = async () => {
         if (search) {
             try {
                 setToken(token)
@@ -61,14 +52,18 @@ const Chats = () => {
         }
     }
 
+    const openChat = (user) => {
+        onChooseChat(user)
+    }
+
     return (
       <div className="chats">
         <div className="chats__toolbar">
-            <div></div>
-            <button className="btn primary"
+            <div className="flex justify-end">
+                <button className="btn primary"
                 onClick={toggleSearchField}>new chat</button>
-        </div>
-        <div className="chats__body">
+            </div>
+            
             <div className="chats__new-chat-field" id="search-field">
                 <input placeholder="Search person"
                     ref={searchInput}
@@ -77,8 +72,17 @@ const Chats = () => {
                     onKeyDown={handleKeyDown}
                     onChange={searchContact}/>
             </div>
-            {searchedUsers.length === 0 ? <ChatItem listTitle="Active chats" items={chats} /> : ''}
-            <ChatItem listTitle={searchedUsers.length > 0 ? 'Possible users' : ''} items={searchedUsers} />
+        </div>
+        <div className="chats__body">
+            {searchedUsers.length === 0 ? <ChatItem
+                activeChat={activeChat}
+                onItemClick={openChat} 
+                listTitle="Active chats" 
+                items={chats} /> : ''}
+            <ChatItem onItemClick={openChat}
+                activeChat={activeChat}
+                listTitle={searchedUsers.length > 0 ? 'Possible users' : ''} 
+                items={searchedUsers} />
         </div>
       </div>
     )
