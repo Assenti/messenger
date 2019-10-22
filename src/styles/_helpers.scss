@@ -1,0 +1,36 @@
+.flex {
+    display: flex;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+@each $size in 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 {
+    .mx-#{$size} {
+        margin-left: #{$size}px !important;
+        margin-right: #{$size}px !important;
+    }
+}
+
+@each $size in 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 {
+    .mr-#{$size} {
+        margin-right: #{$size}px !important;
+    }
+}

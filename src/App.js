@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getUserChats } from './actions/chatActions'
 
 /** Components */
 import AppHeader from './components/AppHeader'
@@ -14,6 +15,11 @@ import Auth from './components/Auth'
 
 const App = () => {
     const isLoggedIn = useSelector(state => state.auth.isLogged)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getUserChats())
+    })
 
     return (
         <div className="app">

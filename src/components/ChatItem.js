@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import mockIcon from '../img/man.png'
+import { api, setToken } from '../api'
+import { useSelector } from 'react-redux'
 
 const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
     const [search, setSearch] = useState('')
+    const token = useSelector(state => state.auth.user.token)
 
     /** Something like computed property in Vue */
     const filteredItems = (items) => {
@@ -18,6 +21,20 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
         }
     }
 
+    const createNewChat = async (user) => {
+        try {
+            setToken(token)
+            const { data } = await api.get(`newChat?participant=${user._id}`)
+            console.log(data)
+            if (data.status === 'success') {
+
+            } else {
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const handleKeyDown = (e) => {
         if (e.keyCode === 27) {
             setSearch('')
@@ -25,7 +42,11 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
     }
 
     const handleClick = (user) => {
-        onItemClick(user)
+        if (listTitle === 'Possible users') {
+            createNewChat(user)
+        } else if (listTitle === 'Active chats') {
+            onItemClick(user)
+        }
     }
 
     return(
@@ -40,13 +61,15 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
                 </div> : ''}
             <div>
                 {filteredItems(items).map((user, index) => {
-                    console.log(activeChat)
                     return <div className={activeChat.name.includes(user.firstname) ? 'chats__chat chosen' : 'chats__chat'} 
                         key={index} onClick={(e) => handleClick(user)}>
                         <div className="chats__chat-item">
                             <div className="flex">
                                 <img className="chats__chat-icon" src={mockIcon} alt="avatar"/>
-                                <div className="flex align-center">{user.firstname} {user.lastname}</div>
+                                {listTitle === 'Active chats' ? 
+                                    <div className="flex align-center">{user.users[1].firstname} {user.users[1].lastname}</div> :
+                                    <div className="flex align-center">{user.firstname} {user.lastname}</div>
+                                }
                             </div>
                             <div className="chats__chat-arrow">
                                 <i className="material-icons">chevron_right</i>

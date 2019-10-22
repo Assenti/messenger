@@ -7,13 +7,20 @@ const Main = () => {
     const _messages = useSelector(state => state.chat.chatMessages)
 
     const [activeChat, setActiveChat] = useState({
-        name: `Chat with Sarah Conor`,
-        messages: _messages
+        name: '',
+        messages: []
     })
+
+    const closeChat = () => {
+        setActiveChat({
+            name: '',
+            messages: []
+        })
+    }
 
     const assignActiveChat = (chat) => {
         setActiveChat({
-            name: `Chat with ${chat.firstname} ${chat.lastname}`,
+            name: `Chat with ${chat.users[1].firstname} ${chat.users[1].lastname}`,
             messages: _messages
         })
     }
@@ -21,7 +28,14 @@ const Main = () => {
     return(
         <div className="flex space-between full-width">
             <Chats activeChat={activeChat} onChooseChat={assignActiveChat}/>
-            <ActiveChat chat={activeChat}/>
+            { activeChat.name ?  
+                <ActiveChat chat={activeChat} onClose={closeChat}/> :
+                <div className="chats__no-chat-placeholder">
+                    <div title="https://giphy.com">
+                        <div>Start chat</div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

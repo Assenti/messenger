@@ -1,14 +1,24 @@
 import React from 'react'
 import ActiveChatInput from './ActiveChatInput'
 
-const ActiveChat = ({ chat }) => {
+const ActiveChat = ({ chat, onClose }) => {
+    const closeChat = (e) => {
+        onClose()
+    }
 
     return (
         <div className="active-chat">
             <div className="active-chat__toolbar">
                 <div className="active-chat__toolbar-title">{ chat.name }</div>
-                <div className="icon__btn">
-                    <i className="material-icons">more_vert</i>
+                <div className="flex align-center">
+                    <div className="icon__btn mr-20">
+                        <i className="material-icons">more_vert</i>
+                    </div>
+                    <div className="icon__btn" 
+                        title="Close chat"
+                        onClick={closeChat}>
+                        <i className="material-icons">close</i>
+                    </div>
                 </div>
             </div>
             <div className="chat-messages">

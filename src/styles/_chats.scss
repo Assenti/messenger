@@ -111,3 +111,41 @@
         width: 95% !important;
     }
 }
+
+.chats__no-chat-placeholder {
+    margin-left: 5px;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    overflow: hidden;
+    height: calc(100vh - 80px);
+    width: 75%;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    & > div {
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        background-image: url('../img/chats.gif');
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: rgba($secondary, .1);
+        box-shadow: 1px 1px 30px rgba($primary, .3);
+        position: relative;
+
+        & > div {
+            position: absolute;
+            width: 100%;
+            top: -50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            color: $primary;
+        }
+    }
+
+
+}

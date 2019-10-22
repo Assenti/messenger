@@ -1,4 +1,4 @@
-import { NEW_MSG } from '../actions/types'
+import { NEW_MSG, GET_CHATS } from '../actions/types'
 import mockAvatar from '../img/man.png'
 import { api, setToken } from '../api'
 import { socket } from '../socket'
@@ -47,5 +47,31 @@ export const addNewChat = (participantId, token) => async (dispatch) => {
         return data
     } catch (e) {
         console.log(e)
+    }
+}
+
+
+/** Get user chats */
+export const getUserChats = () => async (dispatch, getState) => {
+    try {
+        const { user } = getState().auth
+        setToken(user.token)
+        const { data } = await api.get(`/chats?id=${user._id}`)
+        if (data.status === 'success') {
+            dispatch({
+                type: GET_CHATS,
+                payload: data.result
+            })
+        } else if (data.status === 'error') {
+            return {
+                message: data.message
+            }
+        }
+    } catch (e) {
+        console.log(e)
+        let msg = e.response ? JSON.stringify(e.response.data) : 'Server error'
+        return {
+            message: msg
+        }
     }
 }

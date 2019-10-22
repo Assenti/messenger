@@ -13,6 +13,7 @@
 @import 'alert';
 @import 'preloader';
 @import 'modal';
+@import 'helpers';
 
 * {
   font-family: 'Nunito Sans', sans-serif;
@@ -28,28 +29,4 @@ html, body {
   width: 100%;
   max-width: 1024px;
   margin: 0 auto;
-}
-
-.flex {
-  display: flex;
-}
-
-.space-between {
-  justify-content: space-between;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-end {
-  justify-content: flex-end;
-}
-
-.align-center {
-  align-items: center;
-}
-
-.full-width {
-  width: 100%;
 }
