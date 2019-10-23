@@ -6,6 +6,7 @@ import ChatItem from './ChatItem'
 const Chats = ({ activeChat, onChooseChat }) => {
     const [search, setSearch] = useState('')
     const [searchedUsers, setSearchedUsers] = useState([])
+
     const searchInput = React.createRef()
     const token = useSelector(state => state.auth.user.token)
     const chats = useSelector(state => state.chat.chats)

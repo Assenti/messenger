@@ -1,34 +1,30 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import Chats from './Chats'
 import ActiveChat from './ActiveChat'
 
 const Main = () => {
-    const _messages = useSelector(state => state.chat.chatMessages)
-
     const [activeChat, setActiveChat] = useState({
-        name: '',
-        messages: []
+        _id: '',
+        one2one: '',
+        users: []
     })
 
     const closeChat = () => {
         setActiveChat({
-            name: '',
-            messages: []
+            _id: '',
+            one2one: '',
+            users: []
         })
     }
 
     const assignActiveChat = (chat) => {
-        setActiveChat({
-            name: `Chat with ${chat.users[1].firstname} ${chat.users[1].lastname}`,
-            messages: _messages
-        })
+        setActiveChat(chat)
     }
 
     return(
         <div className="flex space-between full-width">
             <Chats activeChat={activeChat} onChooseChat={assignActiveChat}/>
-            { activeChat.name ?  
+            { activeChat._id ?  
                 <ActiveChat chat={activeChat} onClose={closeChat}/> :
                 <div className="chats__no-chat-placeholder">
                     <div title="https://giphy.com">

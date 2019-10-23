@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import mockIcon from '../img/man.png'
-import { api, setToken } from '../api'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { addNewChat } from '../actions/chatActions'
 
 const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
     const [search, setSearch] = useState('')
-    const token = useSelector(state => state.auth.user.token)
+    const dispatch = useDispatch()
 
     /** Something like computed property in Vue */
     const filteredItems = (items) => {
@@ -22,17 +22,7 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
     }
 
     const createNewChat = async (user) => {
-        try {
-            setToken(token)
-            const { data } = await api.get(`newChat?participant=${user._id}`)
-            console.log(data)
-            if (data.status === 'success') {
-
-            } else {
-            }
-        } catch (e) {
-            console.log(e)
-        }
+        dispatch(addNewChat(user._id))
     }
 
     const handleKeyDown = (e) => {
@@ -49,6 +39,10 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
         }
     }
 
+    const isActiveChat = (chat) => {
+        return chat._id === activeChat._id
+    }
+
     return(
         <div>
             {listTitle ? <div className="chats__toolbar-subtitle">{listTitle}:</div> : ''}
@@ -61,7 +55,7 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
                 </div> : ''}
             <div>
                 {filteredItems(items).map((user, index) => {
-                    return <div className={activeChat.name.includes(user.firstname) ? 'chats__chat chosen' : 'chats__chat'} 
+                    return <div className={isActiveChat(user) ? 'chats__chat chosen' : 'chats__chat'} 
                         key={index} onClick={(e) => handleClick(user)}>
                         <div className="chats__chat-item">
                             <div className="flex">

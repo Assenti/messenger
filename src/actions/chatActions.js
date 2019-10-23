@@ -1,27 +1,25 @@
-import { NEW_MSG, GET_CHATS } from '../actions/types'
-import mockAvatar from '../img/man.png'
+import { NEW_MSG, GET_CHATS, GET_MSGS } from '../actions/types'
 import { api, setToken } from '../api'
 import { socket } from '../socket'
-
+import { logger } from '../logger'
+ 
 /** Add a new message into chosen chat
  * @param {string} msg 
  * @param {string} chatId 
  * @param {string} senderId 
  * @param {string} receiverId 
  */
-export const addNewMsg = (msg, chatId, senderId, receiverId) => async (dispatch) => {
-    let id = parseInt(Math.random() * 1000)
+export const addNewMsg = (msg, chatId) => async (dispatch, getState) => {
+    const { user } = getState().auth
 
     socket.emit('newMessage', {
-        id: id,
         text: msg, 
-        sender: 'John Doe',
-        createdAt: '2019-10-06 20:05:00', 
-        avatar: mockAvatar
+        senderId: user._id,
+        chatId: chatId
     })
 
     socket.on('addedNewMessage', (msgData) => {
-        console.log(msgData)
+        logger(msgData)
 
         dispatch({
             type: NEW_MSG,
@@ -40,13 +38,27 @@ export const addNewMsg = (msg, chatId, senderId, receiverId) => async (dispatch)
 /** Add a new chat
  * @param {string} participantId user id 
  */
-export const addNewChat = (participantId, token) => async (dispatch) => {
+export const addNewChat = (participantId) => async (dispatch, getState) => {
     try {
-        setToken(token)
-        const { data } = await api.get(`/newChat?participant=${participantId}`)
-        return data
+        const { user } = getState().auth
+        setToken(user.token)
+        const { data } = await api.get(`newChat?participant=${participantId}`)
+        logger(data)
+        if (data.status === 'success') {
+            return {
+                message: 'New chat successfully created'
+            }
+        } else {
+            return {
+                message: data.message
+            }
+        }
     } catch (e) {
-        console.log(e)
+        logger(e)
+        let msg = e.response ? JSON.stringify(e.response.data) : 'Server error'
+        return {
+            message: msg
+        }
     }
 }
 
@@ -68,7 +80,39 @@ export const getUserChats = () => async (dispatch, getState) => {
             }
         }
     } catch (e) {
-        console.log(e)
+        logger(e)
+        let msg = e.response ? JSON.stringify(e.response.data) : 'Server error'
+        return {
+            message: msg
+        }
+    }
+}
+
+/** Get chat messages */
+export const getChatMsgs = (chatId, page = 1) => async (dispatch, getState) => {
+    
+    try {
+        const { user } = getState().auth
+        setToken(user.token)
+        const { data } = await api.get(`/messages?chatId=${chatId}&page=${page}`)
+        
+        logger(data)
+
+        if (data.status === 'success') {
+            dispatch({
+                type: GET_MSGS,
+                payload: data.result
+            })
+            return {
+                messages: data.result.length === 0 ? 'No messages yet' : ''
+            }
+        } else if (data.status === 'error') {
+            return {
+                message: data.message
+            }
+        }
+    } catch (e) {
+        logger(e)
         let msg = e.response ? JSON.stringify(e.response.data) : 'Server error'
         return {
             message: msg
