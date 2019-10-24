@@ -1,0 +1,37 @@
+@import 'colors';
+
+.author {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: .8rem;
+    background-color: $secondary;
+    width: 100%;
+    padding: 8px;
+    // border-radius: 8px;
+    margin: 0 auto;
+    cursor: pointer;
+    color: $dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: darken($secondary, 5%);
+        transition: all .3s ease;
+    }
+}
+
+.author__link {
+    height: 24px;
+    width: 24px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 8px;
+    text-decoration: none;
+
+    & > img {
+        height: 24px;
+    width: 24px;
+    }
+}

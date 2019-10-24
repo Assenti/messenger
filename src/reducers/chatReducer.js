@@ -18,18 +18,15 @@ export default (state = initialState, action) => {
                 chatMessages: action.payload
             }
         case NEW_MSG: 
-            let newMsgs
-            if (state.chatMessages.length === 0) {
-                // state.chatMessages.push(action.payload)
-                let newMsgsString = JSON.stringify(state.chatMessages)
-                newMsgs = JSON.parse(newMsgsString)
-                newMsgs.push(action.payload)
-            } else {
-                // state.chatMessages.unshift(action.payload)
-                let newMsgsString = JSON.stringify(state.chatMessages)
-                newMsgs = JSON.parse(newMsgsString)
-                newMsgs.unshift(action.payload)
+            let newMsgsString = JSON.stringify(state.chatMessages)
+            let newMsgs = JSON.parse(newMsgsString)
+            let isMsgInList = false
+            for (const msg of newMsgs) {
+                if (msg._id === action.payload._id) {
+                    isMsgInList = true
+                }
             }
+            if (!isMsgInList) newMsgs.unshift(action.payload)
             return {
                 ...state,
                 chatMessages: newMsgs

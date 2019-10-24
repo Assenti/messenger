@@ -5,6 +5,7 @@ import { signIn } from '../actions/authActions'
 import InputMask from 'react-input-mask'
 import Alert from './Alert'
 import Preloader from './Preloader'
+import Author from './Author'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -13,6 +14,7 @@ const Login = () => {
     const [message, setMessage] = useState('')
     const [messageStatus, setMessageStatus] = useState('')
     const [loading, setLoading] = useState(false)
+    const [rememberMe, setRememberMe] = useState(false)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -41,57 +43,71 @@ const Login = () => {
         }
     }
 
+    const toggleRememberMe = () => {
+        if (rememberMe) {
+            setRememberMe(false)
+        } else {
+            setRememberMe(true)
+        }
+    }
+
     return (
         <div className="register">
             <form className="form" onSubmit={_signIn}>
-              
-            {loading ? <Preloader/> : ''}
-            
-            <div className={!!phone ? 'form-field disabled' : 'form-field'}>
-                <div className="form-field__icon">
-                    <i className="material-icons">email</i>
+                {loading ? <Preloader/> : ''}
+                
+                <div className={!!phone ? 'form-field disabled' : 'form-field'}>
+                    <div className="form-field__icon">
+                        <i className="material-icons">email</i>
+                    </div>
+                    <input type="email" 
+                        required
+                        placeholder="Email"
+                        disabled={!!phone}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}/>
                 </div>
-                <input type="email" 
-                    required
-                    placeholder="Email"
-                    disabled={!!phone}
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}/>
-            </div>
 
-            <div className={!!email ? 'form-field disabled' : 'form-field'}>
-                <div className="form-field__icon">
-                    <i className="material-icons">smartphone</i>
+                <div className={!!email ? 'form-field disabled' : 'form-field'}>
+                    <div className="form-field__icon">
+                        <i className="material-icons">smartphone</i>
+                    </div>
+                    <InputMask type="tel"
+                        value={phone}
+                        required
+                        mask="+7\ (999) 999 99 99"
+                        placeholder="Phone"
+                        disabled={!!email}
+                        onChange={e => setPhone(e.target.value)}/>
                 </div>
-                <InputMask type="tel"
-                    value={phone}
-                    required
-                    mask="+7\ (999) 999 99 99"
-                    placeholder="Phone"
-                    disabled={!!email}
-                    onChange={e => setPhone(e.target.value)}/>
-            </div>
 
-            <div className="form-field">
-                <div className="form-field__icon">
-                    <i className="material-icons">lock</i>
+                <div className="form-field">
+                    <div className="form-field__icon">
+                        <i className="material-icons">lock</i>
+                    </div>
+                    <input placeholder="Password" 
+                        type="password"
+                        required
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}/>
                 </div>
-                <input placeholder="Password" 
-                    type="password"
-                    required
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}/>
-            </div>
-            
-            {message ? <Alert message={message}
-                    onDeleteAlert={deleteAlert} 
-                    messageStatus={messageStatus}/> : <br/>}
+                
+                {message ? <Alert message={message}
+                        onDeleteAlert={deleteAlert} 
+                        messageStatus={messageStatus}/> : <br/>}
 
-            <div className="flex align-center justify-end">
-                <button className="btn primary" type="submit">Log in</button>
-            </div>
+                <div className="flex align-center space-between">
+                    <label className="checkbox">Remember me
+                        <input type="checkbox" 
+                            defaultChecked={rememberMe}
+                            onChange={() => toggleRememberMe}/>
+                        <span></span>
+                    </label>
+                    <button className="btn primary" type="submit">Log in</button>
+                </div>
 
-          </form>
+            </form>
+            <Author/>
       </div>
     )
 }

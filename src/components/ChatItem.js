@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import mockIcon from '../img/man.png'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNewChat } from '../actions/chatActions'
 
 const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
     const [search, setSearch] = useState('')
+    const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
 
     /** Something like computed property in Vue */
@@ -43,6 +44,14 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
         return chat._id === activeChat._id
     }
 
+    const chatInterlocutor = (chat) => {
+        for (const _user of chat.users) {
+            if (_user._id !== user._id) {
+                return `${_user.firstname} ${_user.lastname}`
+            }
+        }
+    }
+
     return(
         <div>
             {listTitle ? <div className="chats__toolbar-subtitle">{listTitle}:</div> : ''}
@@ -61,7 +70,7 @@ const ChatItem = ({ activeChat, listTitle, items, onItemClick }) => {
                             <div className="flex">
                                 <img className="chats__chat-icon" src={mockIcon} alt="avatar"/>
                                 {listTitle === 'Active chats' ? 
-                                    <div className="flex align-center">{user.users[1].firstname} {user.users[1].lastname}</div> :
+                                    <div className="flex align-center">{chatInterlocutor(user)}</div> :
                                     <div className="flex align-center">{user.firstname} {user.lastname}</div>
                                 }
                             </div>

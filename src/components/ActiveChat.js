@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import ActiveChatInput from './ActiveChatInput'
 import { getChatMsgs, addNewMsg } from '../actions/chatActions'
+import { socket } from '../socket'
+import { GET_MSGS, NEW_MSG } from '../actions/types'
+import { logger } from '../logger'
 import mockIcon from '../img/man.png'
 
 const ActiveChat = ({ chat, onClose }) => {
@@ -11,14 +14,35 @@ const ActiveChat = ({ chat, onClose }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getChatMsgs(chat._id, page))
+        socket.emit('chatEntered', chat._id)
 
-        document.querySelector('#chat-box').onscroll = () => {
+        socket.on('chatMessages', messages => {
+            dispatch({
+                type: GET_MSGS,
+                payload: messages
+            })
+        })
+
+        socket.on('addedNewMessage', (msgData) => {
+            logger(msgData)
+            dispatch({
+                type: NEW_MSG,
+                payload: msgData
+            })
+        })
+    
+        document.querySelector('#chat-box').onscroll = function () {
             if (this.scrollTop === 0) {
                 let _page = page + 1
                 setPage(_page)
                 dispatch(getChatMsgs(chat._id, page))
             }
+        }
+
+        return () => {
+            socket.off('chatMessages')
+            socket.off('addedNewMessage')
+            socket.off('addedNewMessageBroadcast')
         }
     }, [])
 
@@ -27,7 +51,11 @@ const ActiveChat = ({ chat, onClose }) => {
     }
 
     const chatName = (chat) => {
-        return `Chat with ${chat.users[1].firstname} ${chat.users[1].lastname}` 
+        for (const _user of chat.users) {
+            if (_user._id !== user._id) {
+                return `Chat with ${_user.firstname} ${_user.lastname}`
+            }
+        }
     }
 
     const handleNewMessage = (message) => {

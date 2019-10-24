@@ -1,0 +1,63 @@
+@import 'colors';
+
+.account {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.account__content {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100% - 55px);
+    width: 100%;
+}
+
+.account__avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    
+    img {
+        width: 100%;
+    }
+}
+
+.account__status {
+    padding: 10px;
+    font-size: .8rem;
+    color: gray;
+    text-align: center;
+    width: 100%;
+}
+
+.account__details {
+    color: $dark;
+    padding: 8px;
+    width: 90%;
+
+    small {
+        margin-right: 10px;
+        font-size: .8rem;
+    }
+
+    strong {
+        color: $primary;
+    }
+
+    & > div {
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+    }
+}

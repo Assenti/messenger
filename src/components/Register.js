@@ -3,6 +3,7 @@ import Alert from './Alert'
 import Preloader from './Preloader'
 import InputMask from 'react-input-mask'
 import { api } from '../api'
+import Author from './Author'
 
 const Register = ({ onRegister }) => {
     const [firstname, setFirstname] = useState('')
@@ -136,6 +137,7 @@ const Register = ({ onRegister }) => {
             </div>
 
           </form>
+          <Author/>
       </div>
     )
 }
