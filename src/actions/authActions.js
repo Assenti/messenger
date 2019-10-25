@@ -5,15 +5,17 @@ import { api } from '../api'
  * @param {string} email 
  * @param {string} phone 
  * @param {string} password
+ * @param {Boolean} rememberMe
  * @returns {Object} { message: string, messageStatus: string } 
  */
-export const signIn = (email, phone, password) => async (dispatch) => {
+export const signIn = (email, phone, password, rememberMe) => async (dispatch) => {
     
     try {
         const { data } = await api.post('/login', {
             email,
             phone,
-            password
+            password,
+            rememberMe
         })
         
         if (data.status === 'success') {

@@ -1,0 +1,50 @@
+@import 'colors';
+
+.snackbar {
+    position: fixed;
+    bottom: 15px;
+    width: 250px;
+    left: calc(50% - 125px);
+    min-height: 35px;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 200;
+    font-size: .9rem;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+
+    &.info {
+        background-color: $info;
+        color: white;
+    }
+
+    &.success {
+        background-color: $success;
+        color: white;
+    }
+
+    &.error {
+        background-color: $error;
+        color: white;
+    }
+}
+
+.snackbar-enter {
+    opacity: 0;
+}
+
+.snackbar-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.snackbar-exit {
+    opacity: 1;
+}
+
+.snackbar-exit-active {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}

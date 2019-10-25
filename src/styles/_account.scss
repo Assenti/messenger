@@ -39,6 +39,42 @@
     color: gray;
     text-align: center;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account__status-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 5px 0;
+
+    textarea {
+        outline: none;
+        border: 1px solid grey;
+        border-radius: 4px;
+        padding: 10px 15px;
+        width: calc(100% - 40px);
+        height: 100%;
+        font-size: .9rem;
+
+        &:focus {
+            border-color: cornflowerblue;
+        }
+
+        &::placeholder {
+            color: silver;
+        }
+    }
+}
+
+.account__status-field {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 35px;
 }
 
 .account__details {

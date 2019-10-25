@@ -16,4 +16,10 @@
     &:active {
         transform: scale(.9);
     }
+
+    &.small {
+        i {
+            font-size: .9rem;
+        }
+    }
 }

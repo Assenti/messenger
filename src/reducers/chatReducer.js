@@ -1,4 +1,4 @@
-import { NEW_MSG, GET_CHATS, GET_MSGS } from '../actions/types'
+import { NEW_MSG, GET_CHATS, GET_MSGS, DEL_MSG } from '../actions/types'
 
 const initialState = {
     chats: [],
@@ -30,6 +30,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 chatMessages: newMsgs
+            }
+        case DEL_MSG:
+            let updatedMsgs = []
+            for (const msg of state.chatMessages) {
+                if (msg._id !== action.payload) {
+                    updatedMsgs.push(msg)
+                }
+            }
+            console.log(updatedMsgs)
+            return {
+                ...state,
+                chatMessages: updatedMsgs
             }
         default: 
             return state

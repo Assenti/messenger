@@ -43,12 +43,10 @@ const Drawer = ({ onDrawerClose, onInviteFriend }) => {
         } else {
             setAccount(true)
         }
-        console.log(account)
     }
 
     const username = `${userFirstname} ${userLastname}`
     const links = [
-        { title: 'Main', icon: 'home', path: '/', func: closeDrawer },
         { title: 'Account', icon: 'account_circle', path: '/account', func: toggleAccount },
         { title: 'Invite friend', icon: 'person_add', path: '/', func: inviteFriend },
         { title: 'Logout', icon: 'exit_to_app', path: '/auth', func: logout }

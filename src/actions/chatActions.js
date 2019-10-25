@@ -1,4 +1,4 @@
-import { GET_CHATS, GET_MSGS } from '../actions/types'
+import { GET_CHATS, GET_MSGS, DEL_MSG } from '../actions/types'
 import { api, setToken } from '../api'
 import { socket } from '../socket'
 import { logger } from '../logger'
@@ -34,6 +34,38 @@ export const addNewChat = (participantId) => async (dispatch, getState) => {
                     message: 'New chat successfully created'
                 }
             } else {
+                return {
+                    message: data.message
+                }
+            }
+        }
+    } catch (e) {
+        logger(e)
+        let msg = e.response ? JSON.stringify(e.response.data) : 'Server error'
+        return {
+            message: msg
+        }
+    }
+}
+
+
+/** Delete a message
+ * @param {string} chatId chat id
+ * @param {string} messageId message id 
+ */
+export const deleteMessage = (chatId, messageId) => async (dispatch, getState) => {
+    try {
+        const { user } = getState().auth
+        if (user) {
+            setToken(user.token)
+            const { data } = await api.delete(`message?chatId=${chatId}&messageId=${messageId}`)
+            logger(data)
+            if (data.status === 'success') {
+                dispatch({
+                    type: DEL_MSG,
+                    payload: messageId
+                })
+            } else if (data.status === 'error') {
                 return {
                     message: data.message
                 }

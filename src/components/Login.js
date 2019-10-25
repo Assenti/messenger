@@ -29,7 +29,7 @@ const Login = () => {
         if ((email || phone) && password) {
             setLoading(true)
             let _phone = phone.replace(/['' ',(,)]/g, '').substr(2, 12)
-            const res = await dispatch(signIn(email, _phone, password))
+            const res = await dispatch(signIn(email, _phone, password, rememberMe))
 
             if (res.messageStatus === 'error') {
                 setMessage(res.message)
@@ -99,14 +99,14 @@ const Login = () => {
                 <div className="flex align-center space-between">
                     <label className="checkbox">Remember me
                         <input type="checkbox" 
-                            defaultChecked={rememberMe}
-                            onChange={() => toggleRememberMe}/>
+                            checked={rememberMe}
+                            onChange={() => toggleRememberMe()}/>
                         <span></span>
                     </label>
                     <button className="btn primary" type="submit">Log in</button>
                 </div>
-
             </form>
+
             <Author/>
       </div>
     )
