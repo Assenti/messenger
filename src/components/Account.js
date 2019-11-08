@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import avatar from '../img/person.png'
-import { api, setToken } from '../api'
+import { api } from '../api'
 import { logger } from '../logger'
 import Alert from './Alert'
 
@@ -40,7 +40,6 @@ const Account = ({ onClose }) => {
             const body = {
                 status: status
             }
-            setToken(user.token)
             const { data } = await api.post('/changeStatus', body)
             if (data.status === 'success') {
                 setStatus(data.result)

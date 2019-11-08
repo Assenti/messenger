@@ -11,6 +11,12 @@
     background-color: rgba(#ece5dd, .3);
 }
 
+@media (max-width: 450px) {
+    .active-chat {
+        width: 100%;
+    }
+}
+
 .active-chat__toolbar {
     background-color: $primary;
     background: linear-gradient(90deg, rgba(#01579B,1) 0%, rgba($primary,1) 50%, rgba(3,155,229,1) 100%);

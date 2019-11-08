@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { api, setToken } from '../api'
+import { api } from '../api'
 import { useSelector } from 'react-redux'
 import ChatItem from './ChatItem'
 
@@ -8,7 +8,6 @@ const Chats = ({ activeChat, onChooseChat }) => {
     const [searchedUsers, setSearchedUsers] = useState([])
 
     const searchInput = React.createRef()
-    const token = useSelector(state => state.auth.user.token)
     const chats = useSelector(state => state.chat.chats)
 
     const toggleSearchField = (e) => {
@@ -42,7 +41,6 @@ const Chats = ({ activeChat, onChooseChat }) => {
     const searchUser = async () => {
         if (search) {
             try {
-                setToken(token)
                 const { data } = await api.get(`/searchContacts?query=${search}`)
                 if (data.status === 'success') {
                     setSearchedUsers(data.result)

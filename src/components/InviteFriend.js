@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { api, setToken } from '../api'
-import { useSelector } from 'react-redux'
+import { api } from '../api'
 import Alert from './Alert'
 
 const InviteFriend = ({ onCloseModal }) => {
@@ -8,7 +7,6 @@ const InviteFriend = ({ onCloseModal }) => {
     const [message, setMessage] = useState('')
     const [messageStatus, setMessageStatus] = useState('')
     const emailField = React.createRef()
-    const token = useSelector(state => state.auth.user.token)
 
     const closeModal = (e) => {
         if (e.target === e.currentTarget) {
@@ -25,7 +23,6 @@ const InviteFriend = ({ onCloseModal }) => {
         
         if (email) {
             try {
-                setToken(token)
                 const { data } = await api.get(`/inviteFriend?email=${email}`)
                 if (data.status === 'success') {
                     setMessage('Invitation was successfully sent')

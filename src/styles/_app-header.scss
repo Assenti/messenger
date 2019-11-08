@@ -20,3 +20,9 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+@media (max-width: 450px) {
+    .app-header {
+        margin: 0 !important;
+    }
+}

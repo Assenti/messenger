@@ -9,6 +9,17 @@
     overflow: hidden;
 }
 
+@media (max-width: 450px) {
+    .chats {
+        display: none;
+    }
+
+    .chats__no-chat-placeholder {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+}
+
 .chats__toolbar {
     padding: 5px;
     margin-bottom: 5px;
@@ -147,3 +158,4 @@
         }
     }
 }
+

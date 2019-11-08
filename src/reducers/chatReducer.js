@@ -18,18 +18,9 @@ export default (state = initialState, action) => {
                 chatMessages: action.payload
             }
         case NEW_MSG: 
-            let newMsgsString = JSON.stringify(state.chatMessages)
-            let newMsgs = JSON.parse(newMsgsString)
-            let isMsgInList = false
-            for (const msg of newMsgs) {
-                if (msg._id === action.payload._id) {
-                    isMsgInList = true
-                }
-            }
-            if (!isMsgInList) newMsgs.unshift(action.payload)
             return {
                 ...state,
-                chatMessages: newMsgs
+                chatMessages: [...state.chatMessages, action.payload]
             }
         case DEL_MSG:
             let updatedMsgs = []
@@ -38,7 +29,6 @@ export default (state = initialState, action) => {
                     updatedMsgs.push(msg)
                 }
             }
-            console.log(updatedMsgs)
             return {
                 ...state,
                 chatMessages: updatedMsgs

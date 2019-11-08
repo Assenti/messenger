@@ -1,5 +1,5 @@
 import { GET_CHATS, GET_MSGS, DEL_MSG } from '../actions/types'
-import { api, setToken } from '../api'
+import { api } from '../api'
 import { socket } from '../socket'
 import { logger } from '../logger'
  
@@ -26,7 +26,6 @@ export const addNewChat = (participantId) => async (dispatch, getState) => {
     try {
         const { user } = getState().auth
         if (user) {
-            setToken(user.token)
             const { data } = await api.get(`newChat?participant=${participantId}`)
             logger(data)
             if (data.status === 'success') {
@@ -57,7 +56,6 @@ export const deleteMessage = (chatId, messageId) => async (dispatch, getState) =
     try {
         const { user } = getState().auth
         if (user) {
-            setToken(user.token)
             const { data } = await api.delete(`message?chatId=${chatId}&messageId=${messageId}`)
             logger(data)
             if (data.status === 'success') {
@@ -86,7 +84,6 @@ export const getUserChats = () => async (dispatch, getState) => {
     try {
         const { user } = getState().auth
         if (user) {
-            setToken(user.token)
             const { data } = await api.get('/chats')
             if (data.status === 'success') {
                 dispatch({
@@ -115,7 +112,6 @@ export const getChatMsgs = (chatId, page = 1) => async (dispatch, getState) => {
         const { user } = getState().auth
         
         if (user) {
-            setToken(user.token)
             const { data } = await api.get(`/messages?chatId=${chatId}&page=${page}`)
             
             logger(data)
